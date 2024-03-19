@@ -76,9 +76,9 @@ const init = async()=> {
   const products = await fetchProducts();
   console.log(products);
   const favorites = await Promise.all([
-    createFavorite({ user_id: jack.id, product_id: chocolate.id}),
-    createFavorite({ user_id: lily.id, product_id: pasta.id}),
-    createFavorite({ user_id: mark.id, product_id: coke.id, product_name: "coke"}),
+    createFavorite({ user_id: jack.id, user_name: "jack", product_id: chocolate.id, product_name: "chocolate"}),
+    createFavorite({ user_id: lily.id, user_name: "lily", product_id: pasta.id, product_name: "pasta"}),
+    createFavorite({ user_id: mark.id, user_name: "mark", product_id: coke.id, product_name: "coke"}),
   ]);
   console.log(await fetchFavorites(jack.id));
   await destroyFavorite(favorites[0].id);

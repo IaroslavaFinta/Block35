@@ -23,6 +23,7 @@ const createTables = async () => {
       id UUID PRIMARY KEY,
       product_id UUID REFERENCES products(id) NOT NULL,
       user_id UUID REFERENCES users(id) NOT NULL,
+      user_name VARCHAR(100) REFERENCES users(username),
       product_name VARCHAR(100) REFERENCES products(name),
       CONSTRAINT unique_favorite UNIQUE (product_id, user_id)
     );
@@ -50,13 +51,13 @@ const createProduct = async ({ name }) => {
   return response.rows[0];
 };
 
-const createFavorite = async({ user_id, product_id })=> {
+const createFavorite = async({ user_id, user_name, product_id, product_name })=> {
   const SQL = `
-    INSERT INTO favorites(id, user_id, product_id)
-    VALUES($1, $2, $3)
+    INSERT INTO favorites(id, user_id, user_name, product_id, product_name)
+    VALUES($1, $2, $3, $4, $5)
     RETURNING *
   `;
-  const response = await client.query(SQL, [uuid.v4(), user_id, product_id]);
+  const response = await client.query(SQL, [uuid.v4(), user_id, user_name, product_id, product_name]);
   return response.rows[0];
 }
 
