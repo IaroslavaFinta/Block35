@@ -23,6 +23,7 @@ const createTables = async () => {
       id UUID PRIMARY KEY,
       product_id UUID REFERENCES products(id) NOT NULL,
       user_id UUID REFERENCES users(id) NOT NULL,
+      product_name VARCHAR(100) REFERENCES products(name),
       CONSTRAINT unique_favorite UNIQUE (product_id, user_id)
     );
   `;

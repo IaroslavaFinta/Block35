@@ -40,7 +40,8 @@ app.get('/api/users/:id/favorites', async(req, res, next)=> {
 
 app.post('/api/users/:id/favorites', async(req, res, next)=> {
   try {
-    res.status(201).send(await createFavorite({ user_id: req.params.id, product_id: req.body.product_id}));
+    res.status(201).send(await createFavorite(
+      { user_id: req.params.id, product_id: req.body.product_id}));
   }
   catch(ex){
     next(ex);
@@ -77,7 +78,7 @@ const init = async()=> {
   const favorites = await Promise.all([
     createFavorite({ user_id: jack.id, product_id: chocolate.id}),
     createFavorite({ user_id: lily.id, product_id: pasta.id}),
-    createFavorite({ user_id: mark.id, product_id: coke.id}),
+    createFavorite({ user_id: mark.id, product_id: coke.id, product_name: "coke"}),
   ]);
   console.log(await fetchFavorites(jack.id));
   await destroyFavorite(favorites[0].id);
